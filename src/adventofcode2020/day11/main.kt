@@ -47,23 +47,13 @@ private fun List<List<SeatState>>.occupiedSeats(): Int {
 }
 
 private fun taskB() {
-    val hall = MutableList<MutableList<SeatState>>(0) { mutableListOf() }
-    readFileLineByLine("input11") {
-        val line = it.toCharArray().map { mark -> SeatState.values().first { it.mark == mark } }.toMutableList()
-        hall.add(line)
-    }
-    maxX = hall.size
-    maxY = hall.firstOrNull()?.size ?: 0
-
-    var newHall = getNewHall(hall)
-
-    while (newHall.first != 0) {
-
-        newHall.second.snapshot()
-        newHall = getNewHall(newHall.second)
+    val lines = mutableListOf<String>()
+    readFileLineByLine("input11") { line ->
+        lines.add(line)
     }
 
-    println("Answer is ${newHall.second.occupiedSeats()}")
+    val process = Day11(lines.toList())
+    println("Answer is ${process.solvePart2()}")
 }
 
 fun getNewHall(hall: List<List<SeatState>>): Pair<Int, List<MutableList<SeatState>>> {
